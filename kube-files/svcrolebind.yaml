@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: Service-Role-Binding
+  namespace: webapps
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: app-role
+subjects:
+  - name: jenkins
+    kind: ServiceAccount
+    namespace: webapps
+#At last generate a token for the service account.
