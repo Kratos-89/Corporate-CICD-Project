@@ -11,6 +11,10 @@ pipeline {
   }
 
   environment {
+    REPO_URL = 'https://github.com/Kratos-89/Corporate-CICD-Project.git'
+}
+
+  environment {
     SCANNER_HOME = tool 'SonarQube-Server'
   }
 
@@ -24,7 +28,7 @@ pipeline {
 
     stage('Git Checkout') {
       steps {
-        git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/Kratos-89/Corporate-CICD-Project.git'
+        git branch: 'main', credentialsId: 'git-cred', url: "${REPO_URL}"
       }
     }
 
@@ -77,6 +81,7 @@ pipeline {
           script {
             withDockerRegistry(credentialsId:'doc-cred') {
               sh "docker build -t docravin/blogapp:${params.DOCKER_TAG} ."
+              archiveArtifacts artifacts: 'img.html', allowEmptyArchive: true
             }
           }
         }
@@ -93,6 +98,33 @@ pipeline {
         script {
           withDockerRegistry(credentialsId: 'doc-cred') {
             sh "docker push docravin/blogapp:${params.DOCKER_TAG}"
+          }
+        }
+      }
+    }
+
+    stage('Update the YAML files in the Corporate CICD Repo') {
+      //The purpose of this stage is to update the docker image's latest tag in the deployment file of the app.
+      steps {
+        script {
+          withCredentials([gitUsernamePassword(credentialsId: 'git-cred', gitToolName : 'Default')]) {
+            sh '''
+            git clone ${REPO_URL}
+            cd Corporate-CICD-Project
+
+            ls -l
+
+            repo_dir=$(pwd)
+            #Replace the tag.
+            sed -i "s|image: docravin/blogapp:.*|image: docravin/blogapp:${DOCKER_TAG}|" ${repo_dir}/kube-files/deployments.yaml
+            echo "Updated the deployment file"
+            cat kube-files/deployments.yaml
+            git config user.email "jenkins@cicd.com"
+            git config user.name "jenkins"
+            git add kube-files/deployments.yaml
+            git commit -m "Updated Docker image tag to ${DOCKER_TAG}"
+            git push origin main
+            '''
           }
         }
       }
@@ -148,4 +180,3 @@ pipeline {
     }
   }
 }
-
