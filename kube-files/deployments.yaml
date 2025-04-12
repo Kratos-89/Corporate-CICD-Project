@@ -19,7 +19,13 @@ spec:
           ports:
             - containerPort: 8080
       imagePullSecrets:
-        - name: jenkins-secret
+        - name: regcred
+  #Make sure to execute the "kubectl create secret docker-registry jenkins-secret \
+  # --docker-server=<DOCKER_REGISTRY_URL> \
+  # --docker-username=<USERNAME> \
+  # --docker-password=<PASSWORD> \
+  # --docker-email=<EMAIL> \
+  # --namespace=webapps" command to generate docker registry access token, Check Obsidian.
 
 ---
 apiVersion: v1
