@@ -12,10 +12,11 @@ pipeline {
 
   environment {
     REPO_URL = 'https://github.com/Kratos-89/Corporate-CICD-Project.git'
-}
+    SCANNER_HOME = tool 'SonarQube-Server'
+  }
 
   environment {
-    SCANNER_HOME = tool 'SonarQube-Server'
+    DOCKER_IMAGE = 'docravin/blogapp'
   }
 
   stages {
@@ -80,7 +81,7 @@ pipeline {
         steps {
           script {
             withDockerRegistry(credentialsId:'doc-cred') {
-              sh "docker build -t docravin/blogapp:${params.DOCKER_TAG} ."
+              sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
               archiveArtifacts artifacts: 'img.html', allowEmptyArchive: true
             }
           }
@@ -97,7 +98,7 @@ pipeline {
       steps {
         script {
           withDockerRegistry(credentialsId: 'doc-cred') {
-            sh "docker push docravin/blogapp:${params.DOCKER_TAG}"
+            sh "docker push ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
           }
         }
       }
@@ -116,7 +117,7 @@ pipeline {
 
             repo_dir=$(pwd)
             #Replace the tag.
-            sed -i "s|image: docravin/blogapp:.*|image: docravin/blogapp:${DOCKER_TAG}|" ${repo_dir}/kube-files/deployments.yaml
+            sed -i "s|image: ${DOCKER_IMAGE}:.*|image: ${DOCKER_IMAGE}:${DOCKER_TAG}|" ${repo_dir}/kube-files/deployments.yaml
             echo "Updated the deployment file"
             cat kube-files/deployments.yaml
             git config user.email "jenkins@cicd.com"
@@ -134,7 +135,8 @@ pipeline {
       steps {
         withKubeConfig(caCertificate:'', clusterName:'clusterName', contextName:'', credentialsId:'k8-cred', namespace:'webapps', restrictKubeConfigAccess:false, serverUrl:'ClusterEndpoint') {
           sh 'kubectl apply -f kube-files/deployments.yaml'
-          sleep 20
+          sh 'kubectl rollout status deployment/blog-app-deployment'
+        //The above command is a dynamic command which waits and outputs the success message once the desired state of the deployment is achieved, else it outputs a error message once time-outs.
         }
       }
     }
