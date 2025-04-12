@@ -12,7 +12,7 @@ pipeline {
 
   environment {
     REPO_URL = 'https://github.com/Kratos-89/Corporate-CICD-Project.git'
-    SCANNER_HOME = tool 'SonarQube-Server'
+    SCANNER_HOME = tool 'sonar-scanner' //Refer the spelling for the scanner in the tools section of jenkins.
     DOCKER_IMAGE = 'docravin/blogapp'
   }
 
@@ -46,12 +46,13 @@ pipeline {
     stage('Trivy FS Scan') {
       //Scan for any issues in the dependencies(pom.xml)
       steps {
-        sh 'trivy fs --format table -o fs.html'
+        sh 'trivy fs --format table -o fs.html .' //Make sure you give '.' at the end which specifies the current directory.
       }
     }
 
     stage('Sonar Analysis') {
       steps {
+        //Enter the server name, refer the system section for the sonarqube's server name
         withSonarQubeEnv('SonarQube-Server') {
           sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=blogapp -Dsonar.projectKey=blog -Dsonar.java.binaries=target'''
         }
