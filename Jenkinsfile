@@ -153,7 +153,8 @@ pipeline {
         }
       }
     }
-    post {
+  }
+  post {
       always {
         script {
           def jobName = env.JOB_NAME
@@ -181,7 +182,6 @@ pipeline {
             replyTo: 'jenkins@example.com',
             mimeType: 'text/html',
             attachmentsPattern: 'img.html')
-        }
       }
     }
   }
