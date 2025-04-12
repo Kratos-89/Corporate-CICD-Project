@@ -19,7 +19,7 @@ spec:
           ports:
             - containerPort: 8080
       imagePullSecrets:
-        - name: Blogapp-CICD
+        - name: jenkins-secret
 
 ---
 apiVersion: v1
