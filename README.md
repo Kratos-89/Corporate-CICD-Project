@@ -1,9 +1,7 @@
 ---
-
 # 📦 Blog Application - CI/CD Pipeline with Jenkins & Kubernetes
 
 This project implements a comprehensive CI/CD pipeline for a Java-based blog application. The pipeline automates the build, test, scan, package, and deployment processes using Jenkins. The application is containerized with Docker and deployed to a Kubernetes cluster provisioned using Terraform.
-
 ---
 
 ## ⚙️ Project Components
@@ -19,6 +17,8 @@ This repository includes:
 
 ## 🧱 Infrastructure Setup
 
+![Project Architecture](./images/blogAppArchitecture.drawio.png)
+
 ### ✅ Provisioning
 
 - **Cloud Platform**: AWS
@@ -30,7 +30,7 @@ This repository includes:
 ### ✅ VMs and Roles
 
 | VM                  | Role                         |
-|---------------------|------------------------------|
+| ------------------- | ---------------------------- |
 | `jenkins-server`    | CI/CD pipeline orchestration |
 | `sonarqube-server`  | Code quality analysis        |
 | `nexus-server`      | Artifact repository          |
@@ -42,20 +42,20 @@ This repository includes:
 
 ## 🛠 Tools & Versions
 
-| Tool           | Purpose                              | Version     |
-|----------------|--------------------------------------|-------------|
-| Jenkins        | Pipeline orchestration               | Latest LTS  |
-| Maven          | Build tool for Java                  | 3.9.8       |
-| SonarQube      | Static code analysis                 | Community LTS |
-| Trivy          | Vulnerability scanner                | Latest      |
-| Nexus          | Artifact storage                     | latest      |
-| Docker         | Containerization                     | Latest CE   |
-| Kubernetes     | Container orchestration              | 1.29        |
-| Prometheus     | Metrics collection                   | Latest      |
-| Grafana        | Monitoring dashboard                 | Latest      |
-| Terraform      | EKS cluster management               | 1.11.4      |
-| SonarScanner	 | Static code analysis	                | 6.1.0.4477	|
-| JDK	           | Java Development Kit                 | 17.0.11+9   |
+| Tool         | Purpose                 | Version       |
+| ------------ | ----------------------- | ------------- |
+| Jenkins      | Pipeline orchestration  | Latest LTS    |
+| Maven        | Build tool for Java     | 3.9.8         |
+| SonarQube    | Static code analysis    | Community LTS |
+| Trivy        | Vulnerability scanner   | Latest        |
+| Nexus        | Artifact storage        | latest        |
+| Docker       | Containerization        | Latest CE     |
+| Kubernetes   | Container orchestration | 1.29          |
+| Prometheus   | Metrics collection      | Latest        |
+| Grafana      | Monitoring dashboard    | Latest        |
+| Terraform    | EKS cluster management  | 1.11.4        |
+| SonarScanner | Static code analysis    | 6.1.0.4477    |
+| JDK          | Java Development Kit    | 17.0.11+9     |
 
 ---
 
@@ -202,5 +202,7 @@ pipeline {
 - The image tag in the deployment.yaml is automatically updated once any change is situated.
 
 ---
+
+```
 
 ```
