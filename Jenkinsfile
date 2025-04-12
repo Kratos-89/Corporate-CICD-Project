@@ -80,7 +80,7 @@ pipeline {
           script {
             withDockerRegistry(credentialsId:'doc-cred') {
               sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
-              archiveArtifacts artifacts: 'img.html', allowEmptyArchive: true
+            //archiveArtifacts artifacts: 'img.html', allowEmptyArchive: true
             }
           }
         }
@@ -88,7 +88,12 @@ pipeline {
 
     stage('Trivy Image Scan') {
       steps {
-        sh 'trivy image --format table -o img.html ${DOCKER_IMAGE}:${params.DOCKER_TAG}'
+        withEnv(["DOCKER_IMAGE=${DOCKER_IMAGE}", "DOCKER_TAG=${params.DOCKER_TAG}"]) {
+          sh '''
+      #!/bin/bash
+      trivy image --format table -o img.html ${DOCKER_IMAGE}:${DOCKER_TAG}
+      '''
+        }
       }
     }
 
