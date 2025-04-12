@@ -88,7 +88,7 @@ pipeline {
 
     stage('Trivy Image Scan') {
       steps {
-        sh 'trivy image --format table -o img.html'
+        sh 'trivy image --format table -o img.html ${DOCKER_IMAGE}:${params.DOCKER_TAG}'
       }
     }
 
