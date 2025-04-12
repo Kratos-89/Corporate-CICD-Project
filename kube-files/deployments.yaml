@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: blog-app-container
-          image: docravin/blogapp:v1
+          image: docravin/blogapp:v2
           ports:
             - containerPort: 8080
       imagePullSecrets:
