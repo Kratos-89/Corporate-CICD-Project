@@ -13,9 +13,6 @@ pipeline {
   environment {
     REPO_URL = 'https://github.com/Kratos-89/Corporate-CICD-Project.git'
     SCANNER_HOME = tool 'SonarQube-Server'
-  }
-
-  environment {
     DOCKER_IMAGE = 'docravin/blogapp'
   }
 
