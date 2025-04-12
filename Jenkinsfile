@@ -136,7 +136,8 @@ pipeline {
 
     stage('k8-Deploy') {
       steps {
-        withKubeConfig(caCertificate:'', clusterName:'clusterName', contextName:'', credentialsId:'k8-cred', namespace:'webapps', restrictKubeConfigAccess:false, serverUrl:'ClusterEndpoint') {
+        withKubeConfig(caCertificate:'', clusterName:'blogapp_cluster', contextName:'', credentialsId:'k8-cred', namespace:'webapps', restrictKubeConfigAccess:false, serverUrl:'https://48AAC4877E46F497077BC865B7E4C2F9.gr7.us-east-1.eks.amazonaws.com')//api server endpoint url
+        {
           sh 'kubectl apply -f kube-files/deployments.yaml'
           sh 'kubectl rollout status deployment/blog-app-deployment'
         //The above command is a dynamic command which waits and outputs the success message once the desired state of the deployment is achieved, else it outputs a error message once time-outs.
@@ -146,7 +147,7 @@ pipeline {
 
     stage('Verify Deployment') {
       steps {
-        withKubeConfig(caCertificate:'', clusterName:'clusterName', contextName:'', credentialsId:'k8-cred', namespace:'webapps', restrictKubeConfigAccess:false, serverUrl:'ClusterEndpoint') {
+        withKubeConfig(caCertificate:'', clusterName:'clusterName', contextName:'', credentialsId:'k8-cred', namespace:'webapps', restrictKubeConfigAccess:false, serverUrl:'https://48AAC4877E46F497077BC865B7E4C2F9.gr7.us-east-1.eks.amazonaws.com') {
           sh 'kubectl get pods'
           sh 'kubectl get svc'
         }
