@@ -202,7 +202,3 @@ pipeline {
 - The image tag in the deployment.yaml is automatically updated once any change is situated.
 
 ---
-
-```
-
-```
