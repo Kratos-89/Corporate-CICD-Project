@@ -47,13 +47,14 @@ This repository includes:
 | Jenkins      | Pipeline orchestration  | Latest LTS    |
 | Maven        | Build tool for Java     | 3.9.8         |
 | SonarQube    | Static code analysis    | Community LTS |
-| Trivy        | Vulnerability scanner   | Latest        |
+| Trivy        | Vulnerability scanner   | 0.61.0       |
 | Nexus        | Artifact storage        | latest        |
-| Docker       | Containerization        | Latest CE     |
-| Kubernetes   | Container orchestration | 1.29          |
+| Docker       | Containerization        | 28.0.2       |
+| Kubernetes   | Container orchestration | 1.32.3       |
 | Prometheus   | Metrics collection      | Latest        |
 | Grafana      | Monitoring dashboard    | Latest        |
-| Terraform    | EKS cluster management  | 1.11.4        |
+| Terraform    | EKS cluster management  | 1.11.3       |
+| EKS          | EKS cluster version     | v1.32        |
 | SonarScanner | Static code analysis    | 6.1.0.4477    |
 | JDK          | Java Development Kit    | 17.0.11+9     |
 
