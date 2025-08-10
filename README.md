@@ -38,7 +38,6 @@ This repository includes:
 | `k8s-master`        | Kubernetes master node       |
 | `k8s-worker-1/2`    | Kubernetes worker nodes      |
 
----
 
 ## 🛠 Tools & Versions
 
@@ -58,7 +57,17 @@ This repository includes:
 | SonarScanner | Static code analysis    | 6.1.0.4477    |
 | JDK          | Java Development Kit    | 17.0.11+9     |
 
----
+
+## Ports
+
+| Service            | Port |
+|--------------------|------|
+| Jenkins            | 8080 |
+| Sonatype Nexus     | 8081 |
+| SonarQube          | 9000 |
+| BlackBox exporter  | 9115 |
+| Prometheus         | 9090 |
+| Grafana            | 3000 |
 
 ## 🔁 CI/CD Pipeline Stages (`Jenkinsfile`)
 
