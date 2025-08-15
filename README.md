@@ -1,4 +1,3 @@
----
 # 📦 Blog Application - CI/CD Pipeline with Jenkins & Kubernetes
 
 This project implements a comprehensive CI/CD pipeline for a Java-based blog application. The pipeline automates the build, test, scan, package, and deployment processes using Jenkins. The application is containerized with Docker and deployed to a Kubernetes cluster provisioned using Terraform.
