@@ -17,6 +17,18 @@ pipeline {
   }
 
   stages {
+    stage('Abort if Jenkins Bot Commit') {
+      steps {
+        script {
+          def author = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
+          if (author == 'jenkins@cicd.com') {
+            echo "Build triggered by Jenkins bot commit. Aborting to prevent loop."
+            currentBuild.result = 'ABORTED'
+            error('Aborting build triggered by Jenkins bot commit.')
+          }
+        }
+      }
+    }
     stage('Clean the workspace') {
       //This will clean the workspace to avoid any issues.
       steps {
