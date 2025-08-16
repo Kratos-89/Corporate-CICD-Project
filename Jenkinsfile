@@ -35,7 +35,7 @@ pipeline {
         script {
           def author = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
           if (author == 'jenkins@cicd.com') {
-            echo "Build triggered by Jenkins bot commit. Aborting to prevent loop."
+            echo 'Build triggered by Jenkins bot commit. Aborting to prevent loop.'
             currentBuild.result = 'ABORTED'
             error('Aborting build triggered by Jenkins bot commit.')
           }
@@ -170,6 +170,7 @@ pipeline {
   post {
       always {
         script {
+          // Configure the SMTP Email Notification Section Before.
           def jobName = env.JOB_NAME
           def buildNumber = env.BUILD_NUMBER
           def pipelineStatus = currentBuild.result ?: 'UNKNOWN'
@@ -195,7 +196,7 @@ pipeline {
             replyTo: 'jenkins@example.com',
             mimeType: 'text/html',
             attachmentsPattern: 'img.html')
+        }
       }
-    }
   }
 }
